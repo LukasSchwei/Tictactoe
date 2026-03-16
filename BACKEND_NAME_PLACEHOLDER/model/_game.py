@@ -13,11 +13,12 @@ class Game(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     beginning_time: Mapped[datetime] = mapped_column(nullable=False)
-    player_x: Mapped[int] = mapped_column(
+    player_x: Mapped[str] = mapped_column(
         ForeignKey(column=User.user_name), nullable=False
     )
-    player_o: Mapped[int] = mapped_column(
+    player_o: Mapped[str] = mapped_column(
         ForeignKey(column=User.user_name), nullable=False
     )
 
-    user: Mapped[User] = relationship()
+    player_x_user: Mapped[User] = relationship(foreign_keys=[player_x])
+    player_o_user: Mapped[User] = relationship(foreign_keys=[player_o])
