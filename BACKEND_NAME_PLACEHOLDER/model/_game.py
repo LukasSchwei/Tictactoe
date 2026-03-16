@@ -21,7 +21,3 @@ class Game(Base):
     )
 
     user: Mapped[User] = relationship()
-
-    @override
-    def __repr__(self) -> str:
-        return f"User(id='{self.id}', beginning_time='{self.beginning_time})"

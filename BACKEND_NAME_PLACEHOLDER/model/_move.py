@@ -20,7 +20,3 @@ class Move(Base):
 
     game: Mapped[Game] = relationship()
     user: Mapped[User] = relationship()
-
-    @override
-    def __repr__(self) -> str:
-        return f"User(number='{self.number}', game_id='{self.game_id}', position='{self.position}', player='{self.player}')"
