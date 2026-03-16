@@ -1,7 +1,6 @@
 from datetime import datetime
-from typing import override
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ._base import Base
@@ -13,6 +12,7 @@ class Game(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     beginning_time: Mapped[datetime] = mapped_column(nullable=False)
+    status: Mapped[str] = mapped_column(String(20), default="in_progress")
     player_x: Mapped[str] = mapped_column(
         ForeignKey(column=User.user_name), nullable=False
     )
