@@ -3,8 +3,7 @@ import os
 
 
 class Config:
-
-    DB_CONNECTION_STRING: str = "sqlite:///:memory:"
+    DB_CONNECTION_STRING: str = f"sqlite:///tictactoe.db"
 
     __instances: dict[str, Config] = {}
 

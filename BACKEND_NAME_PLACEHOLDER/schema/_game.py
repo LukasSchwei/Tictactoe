@@ -15,3 +15,4 @@ class GameFull(BaseModel):
     player_x: str
     player_o: str
     board: list[str | None]
+    winner: str | None = None
