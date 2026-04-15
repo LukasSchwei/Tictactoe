@@ -1,14 +1,14 @@
 from crud import GameCrud, MoveCrud, UserCrud
 from fastapi import FastAPI, HTTPException
 from fastapi.param_functions import Depends
-from model import Game
+from model import Game, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 app = FastAPI(title="Tic Tac Toe API")
 engine = create_engine("sqlite:///tictactoe.db")
 SessionLocal = sessionmaker(bind=engine)
-
+Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = SessionLocal()
