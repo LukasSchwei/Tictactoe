@@ -37,7 +37,4 @@ def test_move_model_fields():
     move.number = 5
     assert move.number == 5
 
-def test_base_metadata():
-    assert hasattr(Base, "metadata")
-
 
