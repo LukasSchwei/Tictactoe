@@ -41,7 +41,7 @@ def test_user_crud_get_all():
     crud = UserCrud()
     crud.create_user(db, "player3", "hash3")
     users = crud.get_users(db)
-    assert len(users) >= 1
+    assert len(users) == 1
     assert any(u.user_name == "player3" for u in users)
 
 def test_game_crud_create():
@@ -73,7 +73,7 @@ def test_game_crud_get_all():
     uc.create_user(db, "o", "1")
     gc.create_game(db, "x", "o")
     games = gc.get_games(db)
-    assert len(games) >= 1
+    assert len(games) == 1
 
 def test_move_crud_create():
     db = setup_db()
