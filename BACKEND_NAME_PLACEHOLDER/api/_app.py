@@ -138,3 +138,70 @@ def play_move(game_id: int, pos: int, db: Session = Depends(get_db)):
         "winner": game.winner,
         "status": game.status,
     }
+
+def minimax(board: list, is_maximizing: bool) -> int:
+    winning_combos = [
+        [0, 1, 2], 
+        [3, 4, 5], 
+        [6, 7, 8],
+        [0, 3, 6], 
+        [1, 4, 7], 
+        [2, 5, 8],
+        [0, 4, 8], 
+        [2, 4, 6],
+    ]
+
+    for combo in winning_combos:
+        a, b, c = combo
+        if board[a] and board[a] == board[b] == board[c]:
+            return 1 if board[a] == "O" else -1
+
+    if "" not in board:
+        return 0
+
+    if is_maximizing:
+        best = -10
+        for i in range(9):
+            if board[i] == "":
+                board[i] = "O"
+                best = max(best, minimax(board, False))
+                board[i] = ""
+        return best
+    else:
+        best = 10
+        for i in range(9):
+            if board[i] == "":
+                board[i] = "X"
+                best = min(best, minimax(board, True))
+                board[i] = ""
+        return best
+
+
+def get_best_bot_move(board: list) -> int:
+    best_score = -10
+    best_pos = -1
+    for i in range(9):
+        if board[i] == "":
+            board[i] = "O"
+            score = minimax(board, False)
+            board[i] = ""
+            if score > best_score:
+                best_score = score
+                best_pos = i
+    return best_pos
+
+
+@app.post("/game/{game_id}/play/{pos}/bot")
+def play_move_bot(game_id: int, pos: int, db: Session = Depends(get_db)):
+    state_after_human = play_move(game_id, pos, db)
+    if state_after_human["status"] != "in_progress":
+        return state_after_human
+
+    state = get_board_state(db, game_id)
+    if not state:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    game, moves, board = state
+    bot_pos = get_best_bot_move(board)
+
+    return play_move(game_id, bot_pos, db)
