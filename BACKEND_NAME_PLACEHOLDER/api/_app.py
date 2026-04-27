@@ -1,7 +1,7 @@
-from crud import GameCrud, MoveCrud, UserCrud
+from ..crud import GameCrud, MoveCrud, UserCrud
 from fastapi import FastAPI, HTTPException
 from fastapi.param_functions import Depends
-from model import Game, Base
+from ..model import Game, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 

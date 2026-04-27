@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from model import Game
+from ..model import Game
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 

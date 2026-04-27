@@ -1,4 +1,4 @@
-from model import Move
+from ..model import Move
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
